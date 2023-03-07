@@ -1,3 +1,52 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+# Gradle build files
+**/build/
+**/bin/
+**/out/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+
+# Gradle wrapper files
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# Local configuration files
+/local.properties
+
+# Android generated files
+build/
+app/*/build/
+captures/
+
+# Android Studio files
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+*.pro
+*.properties
+*.settings/
+*.gradle/
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries/
+.gradle/
+/captures/
+*.aar
+*.userprefs
+.idea/
+.gradle/
+gradlew
+gradlew.bat
+gradle/
+/local.properties
+/gradle-app.setting
+/gradle-settings.setting
