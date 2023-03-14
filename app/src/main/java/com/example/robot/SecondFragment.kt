@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.navigation.fragment.findNavController
 import com.example.robot.databinding.FragmentSecondBinding
+import java.util.*
 
 
 /**
@@ -28,7 +28,9 @@ class SecondFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
+
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
 
@@ -48,12 +50,17 @@ class SecondFragment : Fragment() {
                     //gets the end value from the seekBar, the value to send to arduino
                     rotationEndPoint = seekBar.progress
                     var rotationAngle = Math.abs((rotationEndPoint - 90) / 10)
-                    var rotatonLetter= "b";
-                    val rotationString = StringBuilder()
+                    var rotationValue= 2;
+                    /*val rotationString = StringBuilder()
                     for (j in 1..rotationAngle){
                         rotationString.append(rotatonLetter)
+                    }*/
+                    var rotationNum = 0
+                    for (j in 1..rotationAngle){
+                        rotationNum = rotationNum*10 + rotationValue
                     }
-                    Log.d("Endpoint", rotationString.toString())
+                    Log.d("Endpoint", rotationNum.toString())
+                    (activity as MainActivity).sendData(rotationNum)
                 }
             }
         })
@@ -72,6 +79,9 @@ class SecondFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }
 
 
