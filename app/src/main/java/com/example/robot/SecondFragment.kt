@@ -52,7 +52,7 @@ class SecondFragment : Fragment() {
                     }
                     Log.d("rotaionAngle", rotationAngle.toString())
                     Log.d("rotationStar", rotationStartPoint.toString())
-                    //(activity as MainActivity).sendData(rotationAngle)
+                    (activity as MainActivity).sendData(rotationAngle)
 
                     //var rotationNum = 0
                     /*for (j in 1..rotationAngle){
@@ -87,7 +87,7 @@ class SecondFragment : Fragment() {
                     Log.d("ElevationStart", elevationStartPoint.toString())
                     Log.d("ElevationEnd", elevationEndPoint.toString())
                     Log.d("ElevationAngle", elevationAngle.toString())
-                    //(activity as MainActivity).sendData(elevationAngle)
+                    (activity as MainActivity).sendData(elevationAngle)
                 }
             }
         })
@@ -114,7 +114,7 @@ class SecondFragment : Fragment() {
                     Log.d("SpeedStart", speedStartPoint.toString())
                     Log.d("SpeedEnd", speedEndPoint.toString())
                     Log.d("SpeedChange", speedChange.toString())
-                    //(activity as MainActivity).sendData(speedChange)
+                    (activity as MainActivity).sendData(speedChange)
                 }
             }
         })
@@ -122,7 +122,7 @@ class SecondFragment : Fragment() {
         //Shoot
         binding.button.setOnClickListener{
             var shootValue = 7
-            //(activity as MainActivity).sendData(shootValue)
+            (activity as MainActivity).sendData(shootValue)
             Log.d("Shoot button", "Shooting")
         }
         return binding.root
