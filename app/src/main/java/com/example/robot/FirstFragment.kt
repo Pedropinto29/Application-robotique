@@ -35,16 +35,18 @@ class FirstFragment : Fragment() {
 
         binding.buttonFirst.setOnClickListener {
             val easy = 8
-            //(activity as MainActivity).sendData(easy)
+
             Log.d("LEVEL:", "Easy")
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            //(activity as MainActivity).sendData(easy)
         }
 
         binding.buttonFirst2.setOnClickListener{
             val hard = 9
-            //(activity as MainActivity).sendData(hard)
+
             Log.d("LEVEL:", "Hard")
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            //(activity as MainActivity).sendData(hard)
         }
     }
 
