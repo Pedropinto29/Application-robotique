@@ -7,17 +7,6 @@
     tools:context=".SecondFragment">
 
 
-    <SeekBar
-        android:id="@+id/speed"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="212dp"
-        android:max="255"
-        android:progress="0"
-        android:rotation="270"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/rotationText"
         android:layout_width="wrap_content"
@@ -34,13 +23,13 @@
         android:id="@+id/speedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="17dp"
         android:text="Speed"
         android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speed" />
+        app:layout_constraintTop_toBottomOf="@+id/downSpeed" />
 
     <TextView
         android:id="@+id/elevationText"
@@ -67,16 +56,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/reload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="250dp"
-        android:background="@drawable/roundedbutton"
-        android:text="Reload"
-        app:layout_constraintBottom_toTopOf="@+id/rotationText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/reload"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="250dp"-->
+<!--        android:background="@drawable/roundedbutton"-->
+<!--        android:text="Reload"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/rotationText"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
     <TextView
         android:id="@+id/score"
@@ -139,6 +128,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/upSpeed"
+        android:layout_width="104dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="212dp"
+        android:rotation="90"
+        android:src="@drawable/arrow2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/downArrow"
         android:layout_width="104dp"
         android:layout_height="76dp"
@@ -148,6 +148,27 @@
         android:src="@drawable/arrow2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upArrow" />
+
+    <ImageView
+        android:id="@+id/downSpeed"
+        android:layout_width="104dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="48dp"
+        android:rotation="270"
+        android:src="@drawable/arrow2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upSpeed" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="46dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
