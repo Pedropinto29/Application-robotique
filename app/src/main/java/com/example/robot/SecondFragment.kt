@@ -9,8 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.annotation.NonNull
 import androidx.navigation.fragment.findNavController
 import com.example.robot.databinding.FragmentSecondBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.core.SnapshotHolder
 import java.util.*
 class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
@@ -32,6 +38,8 @@ class SecondFragment : Fragment() {
     val downSpeed = 2
     val reset = 11
 
+    private lateinit var database: DatabaseReference
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +47,15 @@ class SecondFragment : Fragment() {
 
     ): View? {
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        database = FirebaseDatabase.getInstance().reference
+
+        database.child("score").child("highScore").get().addOnSuccessListener {
+            val highScore = it.value
+            Log.i("test", "$highScore")
+            Log.i("FFirebase", "${it.value}")
+        }.addOnFailureListener{
+            Log.e("FFirebase", "Error getting data", it)
+        }
 
         //SPEED
 //        binding.speed.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
