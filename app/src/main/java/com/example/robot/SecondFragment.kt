@@ -38,9 +38,9 @@ class SecondFragment : Fragment() {
     val downSpeed = 2
     val reset = 11
 
+    private lateinit var highScore : String
     private lateinit var database: DatabaseReference
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,9 +50,9 @@ class SecondFragment : Fragment() {
         database = FirebaseDatabase.getInstance().reference
 
         database.child("score").child("highScore").get().addOnSuccessListener {
-            val highScore = it.value
-            Log.i("test", "$highScore")
-            Log.i("FFirebase", "${it.value}")
+            highScore = it.value.toString()
+            Log.i("HIGH SCORE", "$highScore")
+            binding.highScore.text = "High Score : $highScore"
         }.addOnFailureListener{
             Log.e("FFirebase", "Error getting data", it)
         }
