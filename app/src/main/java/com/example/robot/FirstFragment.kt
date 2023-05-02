@@ -46,7 +46,7 @@ class FirstFragment : Fragment() {
 
             Log.d("LEVEL:", "Hard")
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            //(activity as MainActivity).sendData(hard)
+            (activity as MainActivity).sendData(hard)
         }
         //(activity as MainActivity).sendData(11)
     }

@@ -38,7 +38,9 @@ class SecondFragment : Fragment() {
     val downSpeed = 2
     val reset = 11
 
-    private lateinit var highScore : String
+    private var highScore : Int = 0
+    private var score : Int = 0
+    private var shots : Int = 0
     private lateinit var database: DatabaseReference
 
     override fun onCreateView(
@@ -50,7 +52,8 @@ class SecondFragment : Fragment() {
         database = FirebaseDatabase.getInstance().reference
 
         database.child("score").child("highScore").get().addOnSuccessListener {
-            highScore = it.value.toString()
+            highScore = Integer.parseInt(it.value.toString())
+            //highScore = it.value.toString()
             Log.i("HIGH SCORE", "$highScore")
             binding.highScore.text = "High Score : $highScore"
         }.addOnFailureListener{
@@ -91,6 +94,37 @@ class SecondFragment : Fragment() {
             Thread.sleep(500)
             Log.d("Reload", "Reloading")
             (activity as MainActivity).sendData(10)
+            if (shots < 9) {
+                shots += 1
+                binding.shots?.text = "Shots : $shots"
+                Log.d("Shots", "$shots")
+                database.child("score").child("currentScore").get().addOnSuccessListener {
+                    //score = it.value.toString()
+                    score = Integer.parseInt(it.value.toString())
+                    Log.i("SCORE", "$score")
+                    binding.score.text = "Score : $score"
+                }.addOnFailureListener{
+                    Log.e("FFirebase", "Error getting data", it)
+                }
+            } else {
+                shots += 1
+                binding.shots?.text = "Shots : $shots"
+                Log.d("Shots", "$shots")
+                database.child("score").child("currentScore").get().addOnSuccessListener {
+                    score = Integer.parseInt(it.value.toString())
+                    Log.i("HIGH SCORE", "$score")
+                    binding.score.text = "Score : $score"
+                    if (score > highScore){
+                        Log.d("", "hereeeeeeee")
+                        highScore = score
+                        binding.highScore.text = "High Score : $highScore"
+                        database.child("score").child("highScore").setValue(highScore)
+                    }
+                }.addOnFailureListener{
+                    Log.e("FFirebase", "Error getting data", it)
+                }
+                shots = 0
+            }
         }
 
         //Reload
@@ -103,7 +137,7 @@ class SecondFragment : Fragment() {
         binding.back?.setOnClickListener{
             Log.d("BACK", "Going back and reseting all the values")
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-            //(activity as MainActivity).sendData(reset)
+            (activity as MainActivity).sendData(reset)
         }
 
         //TURN LEFT
