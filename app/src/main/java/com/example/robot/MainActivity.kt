@@ -21,11 +21,15 @@ import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.robot.databinding.ActivityMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,12 @@ class MainActivity : AppCompatActivity() {
         //setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        database = FirebaseDatabase.getInstance().reference
+        database.child("score").child("highScore").get().addOnSuccessListener {
+            Log.i("FFirebase", "Got value ${it.value}")
+        }.addOnFailureListener{
+            Log.e("FFirebase", "Error getting data", it)
+        }
     }
 
     //override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -88,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         val bytes = inputStream?.read(buffer)
 
         // Temporisation
-        Thread.sleep(1000)
+        Thread.sleep(100)
 
         // Fermeture de la connexion
         socket?.close()
