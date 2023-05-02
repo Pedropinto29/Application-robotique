@@ -50,7 +50,7 @@ class SecondFragment : Fragment() {
     ): View? {
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         database = FirebaseDatabase.getInstance().reference
-
+      
         database.child("score").child("highScore").get().addOnSuccessListener {
             highScore = Integer.parseInt(it.value.toString())
             //highScore = it.value.toString()
@@ -59,6 +59,34 @@ class SecondFragment : Fragment() {
         }.addOnFailureListener{
             Log.e("FFirebase", "Error getting data", it)
         }
+
+        //ROTATION
+        binding.rotationBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekbar: SeekBar?, progress: Int, p2: Boolean) {
+                binding.rotationText.text = "Turn " + (progress - 90).toString() + " °"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                if (seekBar != null) {
+                    rotationStartPoint = seekBar.progress - 90
+                }
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (seekBar != null) {
+                    rotationEndPoint = seekBar.progress - 90
+                    var rotationAngle = (rotationEndPoint - rotationStartPoint) / 10
+                    /*val rotationString = StringBuilder()
+                    for (j in 1..rotationAngle){
+                        rotationString.append(rotatonLetter)
+                    }*/
+                    if (rotationAngle >= 0) {
+                        rotationAngle = rotationAngle * 10 + 5
+                    } else {
+                        rotationAngle = Math.abs(rotationAngle * 10) + 6
+                    }
+                    Log.d("rotaionAngle", rotationAngle.toString())
+                    Log.d("rotationStar", rotationStartPoint.toString())
+                    (activity as MainActivity).sendData(rotationAngle)
+
 
         //SPEED
 //        binding.speed.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -150,6 +178,7 @@ class SecondFragment : Fragment() {
             }
         }
 
+
         //TURN RIGHT
         binding.rightArrow.setOnClickListener{
             if (rotationAngle < 90) {
@@ -157,6 +186,13 @@ class SecondFragment : Fragment() {
                 binding.rotationText.text = "Turn $rotationAngle °"
                 Log.d("Right", "Turning right 10°")
                 (activity as MainActivity).sendData(turnRight)
+
+                    Log.d("ElevationStart", elevationStartPoint.toString())
+                    Log.d("ElevationEnd", elevationEndPoint.toString())
+                    Log.d("ElevationAngle", elevationAngle.toString())
+                    (activity as MainActivity).sendData(elevationAngle)
+                }
+
             }
         }
 
@@ -176,6 +212,7 @@ class SecondFragment : Fragment() {
                 Log.d("Down", "Going down 20° you are at $elevationAngle")
                 (activity as MainActivity).sendData(downValue)
             }
+
         }
 
         //SPEED UP
@@ -184,8 +221,26 @@ class SecondFragment : Fragment() {
                 speed += 50
                 Log.d("Speed Up", "Incresing speed by 50, you are at $speed")
                 (activity as MainActivity).sendData(upSpeed)
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (seekBar != null) {
+                    speedEndPoint = seekBar.progress
+                    var speedChange = (speedEndPoint - speedStartPoint)/10
+                    if(speedChange > 0) {
+                        speedChange = speedChange * 10 + 1
+                    }
+                    else {
+                        speedChange = Math.abs(speedChange * 10) + 2
+                    }
+                    Log.d("SpeedStart", speedStartPoint.toString())
+                    Log.d("SpeedEnd", speedEndPoint.toString())
+                    Log.d("SpeedChange", speedChange.toString())
+                    (activity as MainActivity).sendData(speedChange)
+                }
+
             }
         }
+
 
         //SPEED DOWN
         binding.downSpeed?.setOnClickListener{
@@ -194,6 +249,13 @@ class SecondFragment : Fragment() {
                 Log.d("Speed down", "Decreasing speed by 50, you are at $speed")
                 (activity as MainActivity).sendData(downSpeed)
             }
+
+        //Shoot
+        binding.button.setOnClickListener{
+            var shootValue = 7
+            (activity as MainActivity).sendData(shootValue)
+            Log.d("Shoot button", "Shooting")
+
         }
 
         return binding.root
