@@ -40,7 +40,7 @@ class SecondFragment : Fragment() {
 
     private var highScore : Int = 0
     private var score : Int = 0
-    private var shots : Int = 0
+    private var shots : Int = 10
     private lateinit var database: DatabaseReference
 
     override fun onCreateView(
@@ -94,9 +94,9 @@ class SecondFragment : Fragment() {
             Thread.sleep(500)
             Log.d("Reload", "Reloading")
             //(activity as MainActivity).sendData(10)
-            if (shots < 9) {
-                shots += 1
-                binding.shots?.text = "Shots : $shots"
+            if (shots > 1) {
+                shots -= 1
+                binding.shots?.text = "Shots left: $shots"
                 Log.d("Shots", "$shots")
                 database.child("score").child("currentScore").get().addOnSuccessListener {
                     //score = it.value.toString()
@@ -107,8 +107,8 @@ class SecondFragment : Fragment() {
                     Log.e("FFirebase", "Error getting data", it)
                 }
             } else {
-                shots += 1
-                binding.shots?.text = "Shots : $shots"
+                shots -= 1
+                binding.shots?.text = "Shots left : $shots"
                 Log.d("Shots", "$shots")
                 database.child("score").child("currentScore").get().addOnSuccessListener {
                     score = Integer.parseInt(it.value.toString())
@@ -119,11 +119,15 @@ class SecondFragment : Fragment() {
                         highScore = score
                         binding.highScore.text = "High Score : $highScore"
                         database.child("score").child("highScore").setValue(highScore)
+
                     }
                 }.addOnFailureListener{
                     Log.e("FFirebase", "Error getting data", it)
                 }
-                shots = 0
+                database.child("score").child("currentScore").setValue(0)
+                score = 0
+                shots = 10
+
             }
         }
 
