@@ -90,10 +90,10 @@ class SecondFragment : Fragment() {
         //SHOOT
         binding.button.setOnClickListener{
             Log.d("Shoot button", "Shooting")
-            //(activity as MainActivity).sendData(7)
+            (activity as MainActivity).sendData(7)
             Thread.sleep(500)
             Log.d("Reload", "Reloading")
-            //(activity as MainActivity).sendData(10)
+            (activity as MainActivity).sendData(10)
             if (shots > 1) {
                 shots -= 1
                 binding.shots?.text = "Shots left: $shots"
@@ -119,7 +119,7 @@ class SecondFragment : Fragment() {
                         highScore = score
                         binding.highScore.text = "High Score : $highScore"
                         database.child("score").child("highScore").setValue(highScore)
-
+                        //score = 0
                     }
                 }.addOnFailureListener{
                     Log.e("FFirebase", "Error getting data", it)

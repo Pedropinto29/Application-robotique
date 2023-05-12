@@ -38,7 +38,7 @@ class FirstFragment : Fragment() {
 
             Log.d("LEVEL:", "Easy")
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            //(activity as MainActivity).sendData(easy)
+            (activity as MainActivity).sendData(easy)
         }
 
         binding.buttonFirst2.setOnClickListener{
