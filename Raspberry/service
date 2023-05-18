@@ -1,0 +1,12 @@
+[Unit]
+Description=Robot project service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=Robot
+ExecStart=/usr/bin/python3 /home/robot/Desktop/sensor.python3
+
+[Install]
+WantedBy=multi-user.target
