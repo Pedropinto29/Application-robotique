@@ -21,15 +21,13 @@ import java.util.*
 class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
-    var speedStartPoint = 0
-    var speedEndPoint = 0
     var rotationAngle = 0
     var elevationAngle = 0
     var speed = 0
 
     //Values to send the data to arduino
     val shootValue = 7
-    val reloadValue = 10 //pas sur de celle ci
+    val reloadValue = 10
     val turnLeft = 6
     val turnRight = 5
     val upValue = 3
@@ -38,6 +36,7 @@ class SecondFragment : Fragment() {
     val downSpeed = 2
     val reset = 11
 
+    //Initialize database values
     private var highScore : Int = 0
     private var score : Int = 0
     private var shots : Int = 10
@@ -49,93 +48,70 @@ class SecondFragment : Fragment() {
 
     ): View? {
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
+
+        //Get database reference
         database = FirebaseDatabase.getInstance().reference
 
+        //Get High Score from database
         database.child("score").child("highScore").get().addOnSuccessListener {
             highScore = Integer.parseInt(it.value.toString())
-            //highScore = it.value.toString()
-            Log.i("HIGH SCORE", "$highScore")
             binding.highScore.text = "High Score : $highScore"
         }.addOnFailureListener{
             Log.e("FFirebase", "Error getting data", it)
         }
 
-        //SPEED
-//        binding.speed.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, p2: Boolean) {
-//            }
-//            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//                if (seekBar != null) {
-//                    speedStartPoint = seekBar.progress
-//                }
-//            }
-//            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//                if (seekBar != null) {
-//                    speedEndPoint = seekBar.progress
-//                    var speedChange = (speedEndPoint - speedStartPoint)/10
-//                    if(speedChange > 0) {
-//                        speedChange = speedChange * 10 + 1
-//                    }
-//                    else {
-//                        speedChange = Math.abs(speedChange * 10) + 2
-//                    }
-//                    Log.d("SpeedStart", speedStartPoint.toString())
-//                    Log.d("SpeedEnd", speedEndPoint.toString())
-//                    Log.d("SpeedChange", speedChange.toString())
-//                    (activity as MainActivity).sendData(speedChange)
-//                }
-//            }
-//        })
 
         //SHOOT
         binding.button.setOnClickListener{
             Log.d("Shoot button", "Shooting")
-            (activity as MainActivity).sendData(7)
+            (activity as MainActivity).sendData(shootValue)
             Thread.sleep(500)
+            //Automatic RELOAD
             Log.d("Reload", "Reloading")
-            (activity as MainActivity).sendData(10)
+            (activity as MainActivity).sendData(reloadValue)
+
+            //Check if we haven't done the 10 shots left
             if (shots > 1) {
                 shots -= 1
                 binding.shots?.text = "Shots left: $shots"
-                Log.d("Shots", "$shots")
+
+                //Get score from database
                 database.child("score").child("currentScore").get().addOnSuccessListener {
-                    //score = it.value.toString()
                     score = Integer.parseInt(it.value.toString())
-                    Log.i("SCORE", "$score")
                     binding.score.text = "Score : $score"
                 }.addOnFailureListener{
                     Log.e("FFirebase", "Error getting data", it)
                 }
+
+            //If 10 shots done, the game has finished.
             } else {
                 shots -= 1
                 binding.shots?.text = "Shots left : $shots"
-                Log.d("Shots", "$shots")
+
+                //Get score from database
                 database.child("score").child("currentScore").get().addOnSuccessListener {
                     score = Integer.parseInt(it.value.toString())
-                    Log.i("HIGH SCORE", "$score")
                     binding.score.text = "Score : $score"
+
+                    //Check if score is bigger than high score
                     if (score > highScore){
-                        Log.d("", "hereeeeeeee")
+                        //set new highscore
                         highScore = score
                         binding.highScore.text = "High Score : $highScore"
+
+                        //send new high score to the database
                         database.child("score").child("highScore").setValue(highScore)
-                        //score = 0
                     }
                 }.addOnFailureListener{
                     Log.e("FFirebase", "Error getting data", it)
                 }
+
+                //Set the score to 0 and send it to the database
                 database.child("score").child("currentScore").setValue(0)
                 score = 0
                 shots = 10
-
             }
         }
-
-        //Reload
-//        binding.reload.setOnClickListener{
-//            Log.d("Reload", "Reloading")
-//            (activity as MainActivity).sendData(10)
-//        }
 
         //RESET
         binding.back?.setOnClickListener{
