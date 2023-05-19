@@ -3,5 +3,5 @@
 
 - Dans le dossier *' Raspberry '* on peut retrouver le code Raspberry. Le fichier *' sensor '* c'est le script pour calculer le score et l'envoyer vers la base de données et le fichier *' service '* permet de lancer le script automatiquement au démarrage de la Raspberry.
 
-- Le reste appartiens à l'application mobile.
+- Le reste appartient à l'application mobile.
 
