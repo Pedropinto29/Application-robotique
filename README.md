@@ -1,2 +1,7 @@
-# Application-robotique
-Integration continue, on doit aller dans actions et creer une action pour le type android / kotlin si on trouve et on fait commit this
+# Application-robotique:
+- Dans le dossier *' CodeFinalRobot '* on peut retrouver tout ce qui est le code Arduino de notre projet.
+
+- Dans le dossier *' Raspberry '* on peut retrouver le code Raspberry. Le fichier *' sensor '* c'est le script pour calculer le score et l'envoyer vers la base de données et le fichier *' service '* permet de lancer le script automatiquement au démarrage de la Raspberry.
+
+- Le reste appartiens à l'application mobile.
+
